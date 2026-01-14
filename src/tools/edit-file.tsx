@@ -9,6 +9,8 @@ import { getTheme } from "@/lib/theme.js"
 import { defineTool } from "@/tools/ai.js"
 import { DefaultRejectedMessage } from "@/tools/shared/fallback-rejected-message.js"
 import { type ToolMetadata } from "@/tools/tools.js"
+import { updateFileRelationships } from "@/lib/relationship-tracker.js"
+import { addRecentFile, setCurrentFocus } from "@/lib/project-context.js"
 import { Box, Text } from "ink"
 import { existsSync, mkdirSync, readFileSync } from "node:fs"
 import { writeFile } from "node:fs/promises"
@@ -77,6 +79,12 @@ Remember: when making multiple file edits in a row to the same file, you should 
       const { patch, updatedFile } = applyEdit(filePath, oldString, newString)
 
       await writeFile(fullFilePath, updatedFile, { encoding: "utf8", flush: true })
+
+      // Update relationship tracker and context manager
+      const relativePath = relative(env.cwd!, fullFilePath)
+      await updateFileRelationships(relativePath).catch(() => {}) // Don't fail if tracker fails
+      await addRecentFile(relativePath).catch(() => {})
+      await setCurrentFocus([relativePath]).catch(() => {})
 
       yield <FileContentDiff filePath={filePath} structuredPatch={patch} verbose={false} />
       const { snippet, startLine } = getSnippet(originalFile || "", oldString, newString)

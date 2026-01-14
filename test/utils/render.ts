@@ -9,7 +9,7 @@ export async function waitNextRender(time = 10) {
   await delay(time)
 }
 
-export const spawnOpenCoder = async (node: React.ReactElement, options?: { columns?: number }) => {
+export const spawnCodexaAI = async (node: React.ReactElement, options?: { columns?: number }) => {
   const stdout = createStdout(options?.columns ?? 100)
   const stdin = createStdin()
 

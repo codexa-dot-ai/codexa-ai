@@ -4,7 +4,7 @@ import path from "node:path"
 import "source-map-support/register"
 
 try {
-  const cacheDir = await globalCacheDir("OpenCoder")
+  const cacheDir = await globalCacheDir("CodexaAI")
   module.enableCompileCache(path.join(cacheDir, "v8-cache"))
 
   if (process.argv.includes("--empty-cache")) {

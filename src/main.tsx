@@ -19,8 +19,10 @@ import React from "react"
 import { tools } from "./tools/tools.js"
 import { setTimeout } from "node:timers/promises"
 import { createCoder } from "@/core.js"
+import { resolve } from "node:path"
 
-dotenv.config()
+// Load .env file from project root (use env.cwd which finds the nearest package.json)
+dotenv.config({ path: resolve(env.cwd || process.cwd(), ".env") })
 
 /* class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
   constructor(props: { children: React.ReactNode }) {
@@ -60,15 +62,40 @@ if (command === "init") {
 }
 
 if (import.meta.env.PROD) {
+  const modelName = config.model?.modelId || "claude-haiku-4-5-20251001"
   console.log(
     boxen(
-      `Welcome to OpenCoder@${pkg.version}
-Model: ${chalk.green(config.model?.modelId || "claude-3-5-sonnet-20241022")}
-Working directory: ${chalk.green(env.cwd)}`,
+      `${chalk.bold.magenta("🚀 Welcome to Codexa AI")} ${chalk.dim(`v${pkg.version}`)}
+
+${chalk.bold("Your AI Terminal for Crypto Development")}
+${chalk.dim("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")}
+
+${chalk.bold("📋 Session Info:")}
+  ${chalk.magenta("•")} Model: ${chalk.cyan(modelName)}
+  ${chalk.magenta("•")} Working directory: ${chalk.cyan(env.cwd)}
+
+${chalk.bold("💎 Built-in Crypto Tools:")}
+  ${chalk.magenta("•")} ${chalk.cyan("read-contract-state")} - Read Ethereum contract state & view functions
+  ${chalk.magenta("•")} ${chalk.cyan("read-program-account")} - Read Solana program accounts & data  
+  ${chalk.magenta("•")} ${chalk.cyan("read-transaction")} - Decode & analyze Ethereum transactions
+
+${chalk.bold("⌨️  Quick Commands:")}
+  ${chalk.magenta("/")}${chalk.cyan("help")} - Get help with Codexa AI
+  ${chalk.magenta("/")}${chalk.cyan("clear")} - Clear chat history
+  ${chalk.magenta("/")}${chalk.cyan("sync")} - Sync codebase to embeddings index
+
+${chalk.bold("💡 Getting Started:")}
+  ${chalk.dim("•")} Ask about Ethereum or Solana development
+  ${chalk.dim("•")} Use tools to interact with blockchain data
+  ${chalk.dim("•")} Example: "Check balance of 0x..." or "Read Solana account: ..."
+
+${chalk.dim("Ready to build? Start typing your question below!")}`,
       {
-        padding: 1,
-        borderColor: "green",
+        padding: { top: 1, bottom: 1, left: 2, right: 2 },
+        borderColor: "magenta",
         borderStyle: "round",
+        title: chalk.bold.magenta("Codexa AI"),
+        titleAlignment: "center",
       },
     ),
   )

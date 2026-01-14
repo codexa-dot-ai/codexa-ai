@@ -9,6 +9,8 @@ import { getTheme } from "@/lib/theme.js"
 import { defineTool } from "@/tools/ai.js"
 import { DefaultRejectedMessage } from "@/tools/shared/fallback-rejected-message.js"
 import { type ToolMetadata } from "@/tools/tools.js"
+import { updateFileRelationships } from "@/lib/relationship-tracker.js"
+import { addRecentFile, setCurrentFocus } from "@/lib/project-context.js"
 import type { Hunk } from "diff"
 import { Box, Text } from "ink"
 import { existsSync, mkdirSync, readFileSync } from "node:fs"
@@ -47,6 +49,12 @@ Before using this tool:
 
       mkdirSync(dir, { recursive: true })
       await writeFile(fullFilePath, content, { encoding: "utf8", flush: true })
+
+      // Update relationship tracker and context manager
+      const relativePath = relative(env.cwd!, fullFilePath)
+      await updateFileRelationships(relativePath).catch(() => {}) // Don't fail if tracker fails
+      await addRecentFile(relativePath).catch(() => {})
+      await setCurrentFocus([relativePath]).catch(() => {})
 
       const patch = getPatch({
         filePath: filePath,

@@ -62,7 +62,7 @@ Usage notes:
       system:
         typeof config.evaluateSystem === "function"
           ? config.evaluateSystem(context)
-          : `You are an agent for OpenCoder, a CLI for coding. Given the user's prompt, you should evaluate user's tasks with the help of the tools available.
+          : `You are an agent for Codexa AI, a CLI for coding. Given the user's prompt, you should evaluate user's tasks with the help of the tools available.
 
 Notes:
 1. IMPORTANT: You should be concise, direct, and to the point, since your responses will be displayed on a command line interface. Answer the user's question directly, without elaboration, explanation, or details. One word answers are best. Avoid introductions, conclusions, and explanations. You MUST avoid text before/after your response, such as "The answer is <answer>.", "Here is the content of the file..." or "Based on the information provided, the answer is..." or "Here is what I will do next...".

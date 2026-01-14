@@ -68,9 +68,9 @@ export async function initConfig() {
     )
   }
   console.log(
-    boxen(`Coder config file created at ${chalk.green(join(env.cwd, file))}`, {
+    boxen(`Coder config file created at ${chalk.magenta(join(env.cwd, file))}`, {
       padding: 1,
-      borderColor: "green",
+      borderColor: "magenta",
       borderStyle: "round",
     }),
   )

@@ -12,7 +12,7 @@ export { createOpenAI, openai } from "@ai-sdk/openai"
 export { z } from "zod"
 export { default as React } from "react"
 
-const cacheDir: string = (await globalCacheDir("OpenCoder")) as string
+const cacheDir: string = (await globalCacheDir("CodexaAI")) as string
 export const storage: Storage = createStorage({
   driver: (fsLiteDriver as any)({ base: path.join(cacheDir, "general-cache") }),
 })

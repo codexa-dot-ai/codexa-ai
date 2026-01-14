@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 import { EventEmitter } from "node:stream"
 import { useStdin } from "ink"
-import { spawnOpenCoder } from "./render.js"
+import { spawnCodexaAI } from "./render.js"
 import { vi } from "vitest"
 
 export async function createAppTestWrapper({
@@ -19,7 +19,7 @@ export async function createAppTestWrapper({
     stdin = internal_eventEmitter
     return <AppTestWrapper store={store} queryClient={queryClient} config={config} />
   }
-  const { instance, stdout } = await spawnOpenCoder(<App />)
+  const { instance, stdout } = await spawnCodexaAI(<App />)
 
   await vi.waitUntil(
     () => {

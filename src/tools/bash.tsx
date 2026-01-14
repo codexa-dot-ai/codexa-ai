@@ -112,16 +112,16 @@ When the user asks you to create a new git commit, follow these steps carefully:
 </commit_analysis>
 
 4. Create the commit with a message ending with:
-🤖 Generated with OpenCoder
-Co-Authored-By: OpenCoder <noreply@opencoder.dev>
+🤖 Generated with Codexa AI
+Co-Authored-By: Codexa AI <noreply@codexaai.dev>
 
 - In order to ensure good formatting, ALWAYS pass the commit message via a HEREDOC, a la this example:
 <example>
 git commit -m "$(cat <<'EOF'
    Commit message here.
 
-   🤖 Generated with OpenCoder
-   Co-Authored-By: OpenCoder <noreply@opencoder.dev>
+   🤖 Generated with Codexa AI
+   Co-Authored-By: Codexa AI <noreply@codexaai.dev>
    EOF
    )"
 </example>

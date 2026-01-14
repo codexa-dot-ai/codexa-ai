@@ -63,7 +63,7 @@ export function Chat() {
                   render: !value.generate
                     ? (tool) =>
                         tool.state === "result" ? (
-                          <Text color="green">
+                          <Text color="magenta">
                             {inspect(tool.result, {
                               showHidden: false,
                               depth: 1,
@@ -93,7 +93,7 @@ export function Chat() {
               render: !value.generate
                 ? (tool) =>
                     tool.state === "result" ? (
-                      <Text color="green">
+                      <Text color="magenta">
                         {inspect(tool.result, {
                           showHidden: false,
                           depth: 1,
@@ -203,7 +203,7 @@ export function Chat() {
             }
           }, 50)
 
-          const model2 = model || anthropic("claude-3-5-sonnet-20241022")
+          const model2 = model || anthropic("claude-haiku-4-5-20251001")
           const stream = streamText({
             tools: Object.fromEntries(
               Object.entries(finalTools).map(([key, value]) => [key, value.tool]),
@@ -388,6 +388,42 @@ export function Chat() {
             name: "clear",
             description: "Clear chat history",
             userFacingName: () => "clear",
+          },
+          {
+            name: "balance",
+            description: "Check balance of an Ethereum or Solana address (usage: /balance <address> [network])",
+            userFacingName: () => "balance",
+            type: "prompt",
+            argNames: ["address", "network?"],
+          },
+          {
+            name: "gas",
+            description: "Get current Ethereum gas prices",
+            userFacingName: () => "gas",
+          },
+          {
+            name: "network",
+            description: "Show current network configuration and RPC status",
+            userFacingName: () => "network",
+          },
+          {
+            name: "verify",
+            description: "Check contract verification status (usage: /verify <address> [network])",
+            userFacingName: () => "verify",
+            type: "prompt",
+            argNames: ["address", "network?"],
+          },
+          {
+            name: "explorer",
+            description: "Generate explorer link for address or transaction (usage: /explorer <address|tx> [network])",
+            userFacingName: () => "explorer",
+            type: "prompt",
+            argNames: ["address|tx", "network?"],
+          },
+          {
+            name: "help",
+            description: "Get help with Codexa AI and crypto development",
+            userFacingName: () => "help",
           },
         ]}
         isDisabled={false}

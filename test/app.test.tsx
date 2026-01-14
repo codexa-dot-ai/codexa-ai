@@ -10,7 +10,7 @@ import React from "react"
 import type { AppContextType } from "../src/app/context.js"
 import { buildComponentTree, componentTreeToString } from "./utils/debugger.js"
 import { delay } from "./utils/delay.js"
-import { spawnOpenCoder, waitNextRender } from "./utils/render.js"
+import { spawnCodexaAI, waitNextRender } from "./utils/render.js"
 import { AppTestWrapper, createAppTestWrapper } from "./utils/wrapper.js"
 
 test("basic", async () => {

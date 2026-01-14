@@ -52,16 +52,16 @@ export function ToolConfirmationDialog() {
       width={term.columns}
       height={term.rows}
       borderStyle="round"
-      borderColor="yellow"
+      borderColor="magenta"
       padding={1}
     >
       <Box flexDirection="column" gap={1}>
-        <Text bold color="yellow">
+        <Text bold color="magenta">
           Tool Confirmation Required
         </Text>
         <Text>Do you want to run the following tool?</Text>
         <Box flexDirection="column" marginY={1} paddingX={2}>
-          <Text bold color="green">
+          <Text bold color="magenta">
             {state.toolName}
           </Text>
           <Text color="gray">Arguments:</Text>
@@ -75,7 +75,7 @@ export function ToolConfirmationDialog() {
               <Text backgroundColor="red" color="white" bold>
                 [Cancel]
               </Text>
-              <Text color="green" bold>
+              <Text color="magenta" bold>
                 [Confirm]
               </Text>
             </>
@@ -85,7 +85,7 @@ export function ToolConfirmationDialog() {
               <Text color="red" bold>
                 [Cancel]
               </Text>
-              <Text backgroundColor="green" color="white" bold>
+              <Text backgroundColor="magenta" color="white" bold>
                 [Confirm]
               </Text>
             </>

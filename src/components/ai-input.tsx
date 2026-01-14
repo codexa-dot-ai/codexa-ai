@@ -210,16 +210,196 @@ export const AIInput = memo(
       setPastedText(null)
 
       if (finalInput.startsWith("/")) {
-        const command = commands.find((cmd) => cmd.userFacingName() === finalInput.slice(1).trim())
+        const commandParts = finalInput.slice(1).trim().split(/\s+/)
+        const commandName = commandParts[0]
+        const args = commandParts.slice(1)
+        const command = commands.find((cmd) => cmd.userFacingName() === commandName)
+        
         if (command?.name === "sync") {
           index.mutate({})
+          return
         }
         if (command?.name === "clear") {
           await messageStorage.del("/messages")
           await messageStorage.del("/tools")
           setMessages([])
+          return
         }
-        return
+        if (command?.name === "help") {
+          // Enhanced help will be shown via AI response
+          onInputChange("")
+          setMessages([
+            ...messages,
+            {
+              id: `help-${Date.now()}`,
+              role: "user",
+              content: "Show me help for Codexa AI, including crypto development commands and examples",
+            },
+          ])
+          onChatSubmit()
+          return
+        }
+        if (command?.name === "gas") {
+          // Show gas prices via AI response
+          onInputChange("")
+          setMessages([
+            ...messages,
+            {
+              id: `gas-${Date.now()}`,
+              role: "user",
+              content: "What are the current Ethereum gas prices? Show me current gas prices for mainnet.",
+            },
+          ])
+          onChatSubmit()
+          return
+        }
+        if (command?.name === "network") {
+          // Show network config via AI response
+          onInputChange("")
+          setMessages([
+            ...messages,
+            {
+              id: `network-${Date.now()}`,
+              role: "user",
+              content: "Show me the current network configuration and RPC endpoints being used",
+            },
+          ])
+          onChatSubmit()
+          return
+        }
+        if (command?.name === "balance") {
+          if (args.length === 0) {
+            onInputChange("")
+            setMessages([
+              ...messages,
+              {
+                id: `balance-help-${Date.now()}`,
+                role: "user",
+                content: "How do I check a balance? Show me examples for checking Ethereum and Solana balances",
+              },
+            ])
+            onChatSubmit()
+            return
+          }
+          const address = args[0]
+          const network = args[1] || "mainnet"
+          // Determine if Ethereum or Solana address and call appropriate tool
+          onInputChange("")
+          const isEthereum = /^0x[a-fA-F0-9]{40}$/.test(address)
+          const isSolana = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)
+          
+          if (isEthereum) {
+            setMessages([
+              ...messages,
+              {
+                id: `balance-${Date.now()}`,
+                role: "user",
+                content: `Check the balance of Ethereum address ${address} on ${network}. Use the read-contract-state tool if needed.`,
+              },
+            ])
+          } else if (isSolana) {
+            setMessages([
+              ...messages,
+              {
+                id: `balance-${Date.now()}`,
+                role: "user",
+                content: `Check the balance of Solana account ${address} on ${network}. Use the read-program-account tool.`,
+              },
+            ])
+          } else {
+            setMessages([
+              ...messages,
+              {
+                id: `balance-error-${Date.now()}`,
+                role: "user",
+                content: `Invalid address format: ${address}. Please provide a valid Ethereum (0x...) or Solana (Base58) address.`,
+              },
+            ])
+          }
+          onChatSubmit()
+          return
+        }
+        if (command?.name === "verify") {
+          if (args.length === 0) {
+            onInputChange("")
+            setMessages([
+              ...messages,
+              {
+                id: `verify-help-${Date.now()}`,
+                role: "user",
+                content: "How do I check contract verification status? Show me examples.",
+              },
+            ])
+            onChatSubmit()
+            return
+          }
+          const address = args[0]
+          const network = args[1] || "mainnet"
+          onInputChange("")
+          setMessages([
+            ...messages,
+            {
+              id: `verify-${Date.now()}`,
+              role: "user",
+              content: `Check verification status for contract ${address} on ${network}. Provide the Etherscan/Solscan link and verification status.`,
+            },
+          ])
+          onChatSubmit()
+          return
+        }
+        if (command?.name === "explorer") {
+          if (args.length === 0) {
+            onInputChange("")
+            setMessages([
+              ...messages,
+              {
+                id: `explorer-help-${Date.now()}`,
+                role: "user",
+                content: "How do I generate explorer links? Show me examples for Ethereum and Solana.",
+              },
+            ])
+            onChatSubmit()
+            return
+          }
+          const value = args[0]
+          const network = args[1] || "mainnet"
+          onInputChange("")
+          const isEthereum = /^0x[a-fA-F0-9]{40}$/.test(value)
+          const isSolana = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(value)
+          const isTxHash = /^0x[a-fA-F0-9]{64}$/.test(value)
+          
+          if (isEthereum || isTxHash) {
+            setMessages([
+              ...messages,
+              {
+                id: `explorer-${Date.now()}`,
+                role: "user",
+                content: `Generate Etherscan explorer link for ${isTxHash ? "transaction" : "address"} ${value} on ${network}`,
+              },
+            ])
+          } else if (isSolana) {
+            setMessages([
+              ...messages,
+              {
+                id: `explorer-${Date.now()}`,
+                role: "user",
+                content: `Generate Solscan explorer link for account ${value} on ${network}`,
+              },
+            ])
+          } else {
+            setMessages([
+              ...messages,
+              {
+                id: `explorer-error-${Date.now()}`,
+                role: "user",
+                content: `Invalid format: ${value}. Please provide a valid Ethereum address/tx hash (0x...) or Solana address (Base58).`,
+              },
+            ])
+          }
+          onChatSubmit()
+          return
+        }
+        // Unknown command - let it fall through to normal chat
       }
 
       onChatSubmit()

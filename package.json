@@ -1,5 +1,6 @@
 {
   "name": "opencoder",
+  "description": "Claude Code for crypto development - AI terminal with blockchain-native tools for Ethereum and Solana",
   "type": "module",
   "version": "0.1.0-next.12",
   "license": "Apache-2.0",
@@ -37,19 +38,37 @@
     "fmt": "biome format --write",
     "up": "bunx taze"
   },
-  "keywords": ["claude-code", "open coder", "claude code", "coding agent", "lovable", "bolt.new"],
+  "keywords": [
+    "claude-code",
+    "crypto",
+    "blockchain",
+    "ethereum",
+    "solana",
+    "ai",
+    "coding-assistant",
+    "web3",
+    "smart-contracts",
+    "defi",
+    "cryptocurrency",
+    "terminal",
+    "cli",
+    "opencoder",
+    "codexa-ai"
+  ],
   "dependencies": {
     "@ai-sdk/anthropic": "^1.2.10",
     "@ai-sdk/google": "^1.2.11",
     "@ai-sdk/openai": "^1.3.12",
     "@ai-sdk/openai-compatible": "^0.2.12",
     "@lancedb/lancedb": "^0.18.2",
+    "@solana/web3.js": "^1.95.8",
     "@typescript/vfs": "1.6.1",
     "@vscode/ripgrep": "1.15.11",
     "linkedom": "^0.18.9",
     "@vscode/tree-sitter-wasm": "0.1.4",
     "ai": "^4.3.9",
-    "cli-boxes": "^4.0.1"
+    "cli-boxes": "^4.0.1",
+    "viem": "^2.21.52"
   },
   "devDependencies": {
     "@agentic/ai-sdk": "^7.6.4",
