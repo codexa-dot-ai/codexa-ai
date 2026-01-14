@@ -2,9 +2,6 @@
 
 Claude Code for crypto development.
 
-```bash
-npx opencoder@latest
-```
 
 ## What is this?
 
@@ -30,7 +27,7 @@ Crypto devs shouldn't have to context-switch between terminals, RPCs, explorers,
 
 ## How it works
 
-Built on [OpenCoder](https://github.com/ducan-ne/opencoder), which gives us the Claude Code foundation. Same core functionality, same tools, same workflow—but specialized for crypto development.
+Codexa AI is built on the Claude Code foundation, providing the same terminal interface and workflow, but specialized for crypto development.
 
 We've added:
 - **Crypto-specific tools** for reading contracts, accounts, and transactions
@@ -131,4 +128,3 @@ This architecture lets you build complete crypto products step-by-step. The AI u
 - Security analysis integration
 - Crypto MCP tool ecosystem
 
-Contributions welcome. This is early—help us shape it.
